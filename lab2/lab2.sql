@@ -33,7 +33,7 @@ SELECT nazwa, masa,koszt FROM czekoladki WHERE masa<=20 AND koszt<=0.25;
 
 
 j.w. ale koszt produkcji musi być podany w groszach,
- SELECT nazwa, masa,koszt*100 FROM czekoladki WHERE masa<=20 AND koszt<=0.25;
+ SELECT nazwa, masa,koszt*100 as k FROM czekoladki WHERE masa<=20 AND koszt<=0.25;
 
 wyświetla nazwę oraz rodzaj czekolady, nadzienia i orzechów dla czekoladek, które są w mlecznej czekoladzie i nadziane malinami
 lub są w mlecznej czekoladzie i nadziane truskawkami lub zawierają orzechy laskowe, ale nie są w gorzkiej czekoladzie,
