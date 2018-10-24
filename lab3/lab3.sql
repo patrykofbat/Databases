@@ -139,3 +139,20 @@ SELECT idczekoladki FROM czekoladki
 EXCEPT
 SELECT idczekoladki FROM zawartosc;
 
+
+
+    identyfikator meczu, sumę punktów zdobytych przez gospodarzy i sumę punktów zdobytych przez gości,
+    SELECT gospodarze[1] + gospodarze[2] + gospodarze[3] + coalesce(gospodarze[4], 0) + coalesce(gospodarze[5], 0) AS "Suma punktów gospodarzy", goscie[1]+ goscie[2]+ goscie[3]+ coalesce(goscie[4], 0) + coalesce(goscie[5], 0) AS "Suma punktów gości" from statystyki;
+
+    identyfikator meczu, sumę punktów zdobytych przez gospodarzy i sumę punktów zdobytych przez gości, dla meczów, które skończyły się po 5 setach i zwycięzca ostatniego seta zdobył ponad 15 punktów,
+    SELECT idmeczu, gospodarze[1] + gospodarze[2] + gospodarze[3] + coalesce(gospodarze[4], 0) + coalesce(gospodarze[5], 0), goscie[1]+ goscie[2]+ goscie[3]+ coalesce(goscie[4], 0) + coalesce(goscie[5], 0) 
+    FROM 
+    (SELECT idmeczu, gospodarze, goscie FROM statystyki WHERE array_length(gospodarze, 1)=5 AND array_length(goscie, 1)=5 AND (gospodarze[5]>15 OR goscie[5]>15)) as k;
+
+    identyfikator i wynik meczu w formacie x:y, np. 3:1 (wynik jest pojedynczą kolumną – napisem),
+    SELECT idmeczu, FORMAT('%s:%s',array_length(gospodarze,1), array_length(goscie,1)-1) from statystyki WHERE gospodarze[array_length(gospodarze,1)] > goscie[array_length(goscie,1)];
+    UNION
+    SELECT idmeczu, FORMAT('%s:%s',array_length(goscie,1)), array_length(gospodarze,1)) from statystyki WHERE gospodarze[array_length(gospodarze,1)] < goscie[array_length(goscie,1)];
+    ★ identyfikator meczu, sumę punktów zdobytych przez gospodarzy i sumę punktów zdobytych przez gości, dla meczów, w których gospodarze zdobyli ponad 100 punktów,
+    ★ identyfikator meczu, liczbę punktów zdobytych przez gospodarzy w pierwszym secie, sumę punktów zdobytych w meczu przez gospodarzy, dla meczów, w których pierwiastek kwadratowy z liczby punktów zdobytych w pierwszym secie jest mniejszy niż logarytm o podstawie 2 z sumy punktów zdobytych w meczu. ;)
+
